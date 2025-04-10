@@ -75,23 +75,26 @@ All models were assessed using:
 
 ## 📈 Model Performance Summary
 
-| Model                    | Train Time (Before) | Train Time (After) | Recall (yes) Before | Recall (yes) After | ROC AUC Before | ROC AUC After |
-|--------------------------|---------------------|---------------------|----------------------|---------------------|----------------|----------------|
-| **Logistic Regression**  | 0.0862 s            | 0.0695 s            | 0.1789               | 0.1843              | 0.7770         | 0.7777         |
-| **K–Nearest Neighbors**  | 0.0198 s            | 0.0151 s            | 0.2769               | 0.3082              | 0.7193         | 0.7485         |
-| **Decision Tree**        | 0.0961 s            | 0.0308 s            | 0.3265               | 0.2554              | 0.6204         | 0.6457         |
-| **Support Vector Machine** | 65.7967 s         | 22.5498 s           | 0.2037               | 0.2144              | 0.6788         | 0.6786         |
+### Model Performance Comparison: Baseline vs. Feature Engineering Updates vs. with Hyperparameter Tuning
+
+| Model                    | Train Time Baseline | Train Time Features | Train Time w/Tuning | Recall (yes) Baseline | Recall (yes) Features | Recall (yes) w/Tuning | ROC AUC Baseline | ROC AUC Features | ROC AUC w/Tuning |
+|--------------------------|------------------------|------------------------|----------------------------|------------------------|------------------------|-----------------------------|-------------------|------------------|------------------------|
+| **Logistic Regression**  | 0.0979 s               | 0.0692 s               | 0.7601 s                   | 0.1789                 | 0.1843                 | 0.1853                      | 0.7770            | 0.7777           | 0.7778                 |
+| **K–Nearest Neighbors**  | 0.0256 s               | 0.0125 s               | 3.8303 s                   | 0.2769                 | 0.3082                 | 0.3006                      | 0.7193            | 0.7485           | 0.7137                 |
+| **Decision Tree**        | 0.0973 s               | 0.0296 s               | 1.0707 s                   | 0.3265                 | 0.2554                 | 0.2597                      | 0.6204            | 0.6457           | 0.7338                 |
+| **Support Vector Machine** | 63.3919 s            | 22.2335 s              | 268.667 s                  | 0.2037                 | 0.2144                 | 0.2155                      | 0.6788            | 0.6786           | 0.7085                 |
 
 ---
 
-## ✅ Findings
+### Summary
 
-- Logistic Regression was the most balanced model with consistent and high ROC AUC.
-- KNN showed strong improvement in recall after tuning, making it the best option for finding "yes" cases.
-- Decision Tree was fast but overfit on the training set; performance varied.
-- SVM delivered decent results but had the longest runtime by far.
+- Feature engineering significantly reduced training time and often improved both recall and ROC AUC.
+- Tuning hyperparameters boosted ROC AUC for all models, especially the Decision Tree (from 0.6457 to 0.7338).
+- K-Nearest Neighbors maintained the highest recall across all phases, although its AUC decreased slightly with tuning.
+- Logistic Regression remained the most consistent and interpretable model, with top AUC and stable recall.
+- Support Vector Machine showed modest performance gains, but incurred a significant increase in training time due to the tuning process.
 
-Feature engineering clearly helped reduce training time and improved model performance in most cases.
+---
 
 ---
 
