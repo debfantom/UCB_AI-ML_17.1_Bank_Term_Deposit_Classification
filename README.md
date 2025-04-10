@@ -10,7 +10,7 @@ This repository contains:
 ## 📌 Project Description
 
 This project explores a binary classification problem using a bank marketing dataset. The task is to predict whether a client will subscribe to a term deposit (`y = 'yes'`) based on demographic, campaign, and economic features. I evaluated multiple classifiers and focused on optimizing recall and ROC AUC for the minority class.
-
+![My Image](images/term_deposit_subscription_pie.png)
 ---
 
 ## ❓ Problem
