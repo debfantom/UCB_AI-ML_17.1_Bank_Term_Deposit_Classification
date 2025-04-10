@@ -75,7 +75,7 @@ All models were assessed using:
 
 ## 📈 Model Performance Summary
 
-### Model Performance Comparison: Baseline vs. Feature Engineering Updates vs. with Hyperparameter Tuning
+### Baseline vs. Feature Engineering Updates vs. with Hyperparameter Tuning
 
 | Model                    | Train Time Baseline | Train Time Features | Train Time w/Tuning | Recall (yes) Baseline | Recall (yes) Features | Recall (yes) w/Tuning | ROC AUC Baseline | ROC AUC Features | ROC AUC w/Tuning |
 |--------------------------|------------------------|------------------------|----------------------------|------------------------|------------------------|-----------------------------|-------------------|------------------|------------------------|
