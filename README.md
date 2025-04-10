@@ -4,7 +4,7 @@ This repository contains:
 - **notebook.ipynb**: Jupyter Notebook containing exploratory data analysis, feature engineering, model comparison, and tuning.
 - **data/**: Folder containing the dataset used in this project. 
 - **images/**: Folder with generated plots and visualizations.
-- **CRISP-DM-BANk.pdf: PDF file of research paper "USING DATA MINING FOR BANK DIRECT MARKETING: AN APPLICATION OF THE CRISP-DM METHODOLOGY" 
+- **CRISP-DM-BANK.pdf: PDF file of research paper "USING DATA MINING FOR BANK DIRECT MARKETING: AN APPLICATION OF THE CRISP-DM METHODOLOGY" 
 
 ---
 
