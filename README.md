@@ -2,50 +2,58 @@
 
 This repository contains:
 - **notebook.ipynb**: Jupyter Notebook containing exploratory data analysis, feature engineering, model comparison, and tuning.
-- **data/**: Folder containing the dataset used in this project.
+- **data/**: Folder containing the dataset used in this project. 
 - **images/**: Folder with generated plots and visualizations.
+- 
 
 ---
 
 ## 📌 Project Description
 
 This project explores a binary classification problem using a bank marketing dataset. The task is to predict whether a client will subscribe to a term deposit (`y = 'yes'`) based on demographic, campaign, and economic features. I evaluated multiple classifiers and focused on optimizing recall and ROC AUC for the minority class.
-![My Image](images/term_deposit_subscription_pie.png)
+
+
 ---
 
 ## ❓ Problem
 
 Only about **12% of clients** subscribe to a term deposit, making this an imbalanced classification problem. While a model predicting "no" for every case would score ~88% accuracy, it would fail completely at identifying the successful outcomes that are actually important.
 
+![My Image](images/term_deposit_subscription_pie.png)
+
 Instead of optimizing for accuracy, I focused on:
 - **Recall** (to maximize captured "yes" cases)
-- **ROC AUC** (to assess overall ranking quality)
+- **ROC AUC** (to assess overall ranking quality and potentially be used for prioritization reach out)
 
 A meaningful model should achieve **recall > 0.30** and **ROC AUC > 0.70** to outperform random guessing.
 After some initial exploratory data analysis (EDA), I made the following hypotheses to guide my analysis.  My hope was to identify areas of opportunity to increase the program's success (as measured by term deposit offer acceptance) through my understanding of what factors were correlated to a customer's increased probability of accepting an offered term deposit.
 
 ---
 
-#### Hypotheses:
+### 🔍 Hypotheses
 
-**Primary Hypothesis:**
-Customer coupon acceptance rates are strongly influenced by prior patronage habits (visits per month) specific to the type of establishment (e.g., carry out, coffee house, or cheap restaurant). Customers with a higher historical frequency of visiting such establishments are more likely to accept corresponding coupons.
+#### **Primary Hypothesis**
 
-**Secondary Hypotheses:**
+Customer acceptance rates for term deposit offers are influenced by **macroeconomic conditions**. Since term deposits require locking away funds for a fixed period, customers are likely to make these decisions when they **feel financially secure** and the **economic environment favors saving**.
 
-Coupon Expiration Dynamics:
+Specifically:
+- When **employment is rising** (`emp.var.rate`), customers may feel more secure in their income and more open to long-term savings.
+- When **interest rates are favorable** (e.g., lower `euribor3m`) and **inflation is stable or declining** (`cons.price.idx`), term deposits become more attractive relative to other options.
+- Given that macroeconomic indicators are released quarterly, customer sentiment — and thus campaign performance — may exhibit **quarterly patterns** driven by these releases.
 
-Coupons with a shorter expiration period (e.g., 2 hours) may lead to higher immediate usage, while longer expiration periods (e.g., 1 day) may encourage acceptance for future use. Since success for our use case includes acceptance for later usage, offering the longer expiration in all cases may help boost acceptance rates.  We might also be open to testing longer experation periods.
+#### **Secondary Hypothesis**
+
+Customer **demographics** (such as age, job type, and education level) will have a **moderate influence** on term deposit acceptance rates. Certain segments — like those in professional roles, those with higher education, or older clients nearing retirement — may be more inclined toward conservative, long-term savings products.
 
 ---
 
 ## 📊 Visualizations
 
-During EDA, I explored relationships between features and the likelihood of term deposit subscription.
+During EDA, I explored relationships between features and the likelihood of term deposit acceptance rate.
 
 Key insights:
-- Subscription rate increases steadily with age, with a notable jump at 60+.
-- Clients with university degrees had higher subscription rates than others.
+- Acceptance rate increases steadily with age, with a notable jump at 60+.
+- Clients with university degrees had slightly higher subscription rates than others.
 - Previous campaign success and prior contact were highly correlated with positive outcomes.
 
 Plots are available in the `images/` directory and embedded in the notebook.
@@ -59,23 +67,23 @@ I implemented and compared four classifiers:
 - K-Nearest Neighbors (KNN)
 - Decision Tree
 - Support Vector Machine (SVM)
-
-Each model was evaluated using **recall** and **ROC AUC**, both before and after feature updates and tuning.
-
+  
 ---
 
 ## 🔬 Evaluation Metrics
 
-All models were assessed using:
-- **Recall** on the positive class (`y_binary == True`)
-- **ROC AUC** to measure global separability
-- **Training time** to measure scalability and efficiency
+Each model was evaluated both before and after feature updates and hyperparameter tuning:
+- **Recall** on the positive class (`y_binary == True`) — to measure how well the model identifies **actual subscribers**.
+- **ROC AUC** — to measure how well the model can **rank clients by their likelihood of subscribing**, which is especially useful for **prioritizing outreach**.
+- **Training time** — to measure **scalability and efficiency**, especially important for resource-heavy models like SVM.
 
+---
+# Findings:
 ---
 
 ## 📈 Model Performance Summary
 
-### Baseline vs. Feature Engineering Updates vs. with Hyperparameter Tuning
+#### Baseline vs. Feature Engineering Updates vs. with Hyperparameter Tuning
 
 | Model                    | Train Time Baseline | Train Time Features | Train Time w/Tuning | Recall (yes) Baseline | Recall (yes) Features | Recall (yes) w/Tuning | ROC AUC Baseline | ROC AUC Features | ROC AUC w/Tuning |
 |--------------------------|------------------------|------------------------|----------------------------|------------------------|------------------------|-----------------------------|-------------------|------------------|------------------------|
@@ -84,9 +92,8 @@ All models were assessed using:
 | **Decision Tree**        | 0.0973 s               | 0.0296 s               | 1.0707 s                   | 0.3265                 | 0.2554                 | 0.2597                      | 0.6204            | 0.6457           | 0.7338                 |
 | **Support Vector Machine** | 63.3919 s            | 22.2335 s              | 268.667 s                  | 0.2037                 | 0.2144                 | 0.2155                      | 0.6788            | 0.6786           | 0.7085                 |
 
----
 
-### Summary
+#### Summary
 
 - Feature engineering significantly reduced training time and often improved both recall and ROC AUC.
 - Tuning hyperparameters boosted ROC AUC for all models, especially the Decision Tree (from 0.6457 to 0.7338).
@@ -96,6 +103,117 @@ All models were assessed using:
 
 ---
 
+### 🧪 Hypotheses Review
+
+#### **Primary Hypothesis**
+
+> _Customer acceptance rates for term deposit offers are influenced by macroeconomic conditions._
+
+✅ **Supported.**  
+The strongest predictors in both the **Logistic Regression coefficients** and **Decision Tree splits** were **macroeconomic variables**:
+
+- **`emp.var.rate`** (employment variation rate): Strongly **positively correlated** with acceptance. Suggests customers are more willing to commit to long-term savings when employment prospects are good.
+- **`euribor3m`** (interest rate): Lower rates were associated with higher acceptance — consistent with the idea that when interest rates are low, locking in a fixed return becomes more attractive.
+- **`cons.price.idx`** (consumer price index): Often appeared in the Decision Tree model. Stable or declining inflation made term deposits more appealing.
+- **Quarterly patterns** also emerged, suggesting campaign performance may be influenced by when economic reports are released — supporting the idea that macroeconomic context affects customer sentiment and decision-making.
+
+#### **Secondary Hypothesis**
+
+> _Customer demographics would moderately influence acceptance._
+
+⚠️ **Partially supported — but weaker than expected.**  
+While **age** (particularly customers over 60) showed some influence on acceptance rates, most other demographic features (e.g., `job`, `marital`, `education`) were **either dropped** during feature selection or contributed minimally:
+
+- `job`: Some categories (like `retired`, `student`) showed higher acceptance, but this was likely due to **age effects** or **small sample sizes**, and didn't hold strong predictive power in the model.
+- `education`: Heavily skewed toward `university.degree`, making it hard to detect subtle effects.
+- `marital`: Had very little impact and was not a strong contributor.
+
+---
+# Recommendations: 
+
+##  KNN vs. Logistic Regression
+
+While Logistic Regression is highly interpretable (something that is important in this use case in advising the marketing team), switching to KNN nearly **doubles recall** for positive cases — but also more than **triples the false positives**, meaning significantly more outreach cost. To determine whether this tradeoff is worth it, we calculate the **minimum margin (profit) per new subscriber** needed to break even.
+
+
+####  Confusion Matrix Comparison
+
+| Model                | True Positives (TP) | False Positives (FP) |
+|---------------------|---------------------|-----------------------|
+| Logistic Regression | 172                 | 69                    |
+| KNN                 | 279                 | 228                   |
+
+- **Additional subscribers (TP)**: 279 − 172 = **+107**
+- **Additional cost (FP)**: 228 − 69 = **+159**
+  
+
+### Interpreting the Cost of False Positives
+
+Although the **K-Nearest Neighbors (KNN)** model predicts more clients will subscribe to a term deposit, it does so at the cost of contacting **more people who ultimately don’t convert** — known as **false positives (FPs)**.
+
+This has real costs:
+- Increased marketing spend
+- Risk of frustrating uninterested clients
+
+### Break-Even Analysis of Increased Marketing Spend
+
+Let:
+
+- **M** = required profit per subscriber (true positive)
+- **C** = cost per campaign contact (outreach)
+
+To break even:
+
+> 107 × M ≥ 159 × C  
+> ⇒ M ≥ (159 / 107) × C ≈ **1.49 × C**
+
+**The margin per new subscriber must be at least 1.49× the cost per campaign contact.**
+
+#### Example
+
+If outreach cost **C = $2.00**, then:
+
+> M ≥ 1.49 × 2 = **$2.98**
+
+So for this example, each new subscriber would need to generate **at least $2.98 in profit** to justify using **KNN** over **Logistic Regression**.
+
+---
+
+### False Positives Might Still Be Valuable - even at the cost of frustrating currently uninterested clients
+
+Interestingly, the **Logistic Regression model** identified **`was_previously_contacted`** as one of the **strongest positive predictors** of success. 
+
+- A coefficient of **+1.3** implies the odds of a "yes" increase by a factor of:  **e ^1.3 ≈ 3.67**
+  
+
+> Clients who have been contacted before are **3.7x more likely** to subscribe in the future.
+
+This suggests that even if a client doesn’t convert today, a contact attempt may **increase the chance of conversion in future campaigns** and builds the pool of prospects.
+
+---
+
+### 💡 Smart Targeting vs. Full Blast Tradeoff
+
+Using model-driven targeting would have reduced outreach dramatically compared to a full campaign blast:
+
+| Strategy                        | Contacts Sent | Subscriptions Captured | Subscriptions Missed |
+|---------------------------------|----------------|--------------------------|-----------------------|
+| **Full Blast**                  | 8238           | 928 (all subscribers)    | 0                     |
+| **KNN Targeting**               | 507            | 279                      | 649                   |
+| **Logistic Regression Targeting** | 241            | 172                      | 756                   |
+
+- **KNN** reduces outreach by over 90% while capturing 30% of total conversions. Acceptance rate is 55% (279 / 507).
+- **Logistic Regression** targets even fewer clients while still capturing 19% of conversions. Acceptance rate is 71% (172 / 241).
+
+#### 🔍 Strategic Insight
+
+While the **KNN model** significantly reduces contact volume, it comes at the cost of **missed conversions**. **Logistic Regression**, though slightly less effective in recall, performs well with fewer outreach attempts and offers the benefit of **clear interpretability**.
+
+Moreover, model coefficients highlight **previous contact as a strong indicator** of future conversion. This suggests that even contacts who don’t subscribe today may be more likely to convert in future campaigns — making **false positives less costly** in the long term.
+
+> For ROI optimization, the business may consider a hybrid approach:  
+> Use high-confidence targeting (like KNN) when resources are tight, and leverage Logistic Regression rankings when flexibility allows for broader, data-informed outreach.
+
 ---
 
 ## 🔄 Next Steps
@@ -103,21 +221,6 @@ All models were assessed using:
 Future improvements could include:
 - Testing ensemble methods (e.g., Random Forest, XGBoost)
 - Addressing class imbalance using SMOTE or cost-sensitive learning
-- Refining threshold decisions to improve the balance between recall and precision
-- Adding time-aware modeling for macroeconomic trends
+- Clustering macroeconomic features into one feature of composite macroeconomic climate scores to expose importance of other features.
 
 ---
-
-## 🧪 Environment & Requirements
-
-- Python 3.x
-- pandas
-- scikit-learn
-- matplotlib
-- seaborn
-
-To install dependencies:
-
-```bash
-pip install -r requirements.txt
-
