@@ -1,10 +1,10 @@
 # UCB_AI-ML_17.1_Bank_Term_Deposit_Classification
 
 This repository contains:
-- **notebook.ipynb**: Jupyter Notebook containing exploratory data analysis, feature engineering, model comparison, and tuning.
+- **prompt_III_DF.ipynb**: Jupyter Notebook containing exploratory data analysis, feature engineering, model comparison, and tuning.
 - **data/**: Folder containing the dataset used in this project. 
 - **images/**: Folder with generated plots and visualizations.
-- CRISP-DM-BANK.pdf: PDF file of research paper "Using Data Mining for Bank Direct Marketing: An Application of the CRISP-DM Methodology"
+- **CRISP-DM-BANK.pdf**: PDF file of research paper "Using Data Mining for Bank Direct Marketing: An Application of the CRISP-DM Methodology"
 
 ---
 
