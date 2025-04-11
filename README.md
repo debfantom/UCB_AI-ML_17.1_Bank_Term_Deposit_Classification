@@ -198,6 +198,12 @@ This suggests that even if a client doesn’t convert today, a contact attempt m
 
 ### 💡 Smart Targeting vs. Full Blast Tradeoff
 
+<p align="center">
+  <img src="images/conf_matrix_logreg.png" width="40%" style="margin-right: 10px;" alt="Logistic Regression Confusion Matrix"/>
+  <img src="images/conf_matrix_knn.png" width="40%" style="margin-right: 10px;" alt="KNN Confusion Matrix"/>
+</p>
+
+
 Using model-driven targeting would have reduced outreach dramatically compared to a full campaign blast:
 
 | Strategy                        | Contacts Sent | Subscriptions Captured | Subscriptions Missed |
