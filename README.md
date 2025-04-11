@@ -6,6 +6,8 @@ This repository contains:
 - **images/**: Folder with generated plots and visualizations.
 - **CRISP-DM-BANK.pdf**: PDF file of research paper "Using Data Mining for Bank Direct Marketing: An Application of the CRISP-DM Methodology"
 
+This dataset comes from the UC Irvine Machine Learning Repository Links to an external site. The data is from a Portuguese banking institution and is a collection of the results of multiple marketing campaigns.
+
 ---
 
 ## 📌 Project Description
