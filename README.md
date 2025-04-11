@@ -10,8 +10,9 @@ This repository contains:
 
 ## 📌 Project Description
 
-This project explores a binary classification problem using a bank marketing dataset. The task is to predict whether a client will subscribe to a term deposit (`y = 'yes'`) based on demographic, campaign, and economic features. I evaluated multiple classifiers and focused on optimizing recall and ROC AUC for the minority class.
+The primary objective of this project is to help a bank run smarter, more efficient marketing campaigns by using data to predict which customers are most likely to say yes to a campaign offer for a term deposit. In the past, these campaigns had low success rates — only about 8% — which led to wasted time, high costs, and customer frustration. By applying data mining and machine learning techniques, we’re building a classification model that analyzes past campaign data to identify high-potential customers to call. This targeted approach reduces unnecessary outreach, saves valuable resources like call center time, improves customer satisfaction, and boosts the overall return on investment. 
 
+This is a binary classification problem. The task is to predict whether a client will subscribe to a term deposit (`y = 'yes'`) based on demographic, campaign, and economic features. I evaluated multiple classifiers and focused on optimizing recall and ROC AUC for the minority class.
 
 ---
 
