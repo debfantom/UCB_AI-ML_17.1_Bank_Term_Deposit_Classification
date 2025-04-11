@@ -56,8 +56,9 @@ Key insights:
 - Acceptance rate increases steadily with age, with a notable jump at 60+.
 - Clients with university degrees had slightly higher subscription rates than others.
 - Previous campaign success and prior contact were highly correlated with positive outcomes.
+- The features maritial (status), loan (had a personal loan), housing (had a home loan), day-of-week did not have material differences in acceptance rate between classes.
 
-Plots are available in the `images/` directory and embedded in the notebook.
+![My Image](images/categorical_features_proportion.png)
 
 ---
 
