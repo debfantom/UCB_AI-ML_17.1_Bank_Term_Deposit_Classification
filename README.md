@@ -58,7 +58,7 @@ Customer **demographics** (such as age, job type, and education level) will have
 During EDA, I explored relationships between features and the likelihood of term deposit acceptance rate.
 
 Key insights:
-- Acceptance rate increases steadily with age, with a notable jump at 60+.
+- Acceptance rate for 60+ is significantly higher than for under 60yo.
 - Clients with university degrees had slightly higher subscription rates than others.
 - Previous campaign success and prior contact were highly correlated with positive outcomes.
 - The features maritial (status), loan (had a personal loan), housing (had a home loan), day-of-week did not have material differences in acceptance rate between classes.
