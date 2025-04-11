@@ -30,7 +30,7 @@ After some initial exploratory data analysis (EDA), I made the following hypothe
 
 ---
 
-### 🔍 Hypotheses
+## 🔍 Hypotheses
 
 #### **Primary Hypothesis**
 
@@ -103,32 +103,36 @@ Each model was evaluated both before and after feature updates and hyperparamete
 
 ---
 
-### 🧪 Hypotheses Review
+## 🧪 Hypotheses Review
 
-#### **Primary Hypothesis**
-
+### Primary Hypothesis  
 > _Customer acceptance rates for term deposit offers are influenced by macroeconomic conditions._
 
-✅ **Supported.**  
-The strongest predictors in both the **Logistic Regression coefficients** and **Decision Tree splits** were **macroeconomic variables**:
+**Supported.**  
+Key macroeconomic features were consistently among the strongest predictors in both the Logistic Regression and Decision Tree models:
 
-- **`emp.var.rate`** (employment variation rate): Strongly **positively correlated** with acceptance. Suggests customers are more willing to commit to long-term savings when employment prospects are good.
-- **`euribor3m`** (interest rate): Lower rates were associated with higher acceptance — consistent with the idea that when interest rates are low, locking in a fixed return becomes more attractive.
-- **`cons.price.idx`** (consumer price index): Often appeared in the Decision Tree model. Stable or declining inflation made term deposits more appealing.
-- **Quarterly patterns** also emerged, suggesting campaign performance may be influenced by when economic reports are released — supporting the idea that macroeconomic context affects customer sentiment and decision-making.
+- **`emp.var.rate`** (employment variation rate): Positively correlated with acceptance. Suggests customers are more open to long-term savings when job security is high.
+- **`euribor3m`** (interest rate): Lower interest rates were associated with higher acceptance, as customers may prefer the fixed returns of a term deposit.
+- **`cons.price.idx`** (consumer price index): Stability in inflation likely makes long-term saving more attractive.
 
-#### **Secondary Hypothesis**
-
-> _Customer demographics would moderately influence acceptance._
-
-⚠️ **Partially supported — but weaker than expected.**  
-While **age** (particularly customers over 60) showed some influence on acceptance rates, most other demographic features (e.g., `job`, `marital`, `education`) were **either dropped** during feature selection or contributed minimally:
-
-- `job`: Some categories (like `retired`, `student`) showed higher acceptance, but this was likely due to **age effects** or **small sample sizes**, and didn't hold strong predictive power in the model.
-- `education`: Heavily skewed toward `university.degree`, making it hard to detect subtle effects.
-- `marital`: Had very little impact and was not a strong contributor.
+These indicators are updated quarterly, aligning with observed campaign performance patterns and suggesting that **public economic sentiment plays a measurable role in customer decision-making**.
 
 ---
+
+### Secondary Hypothesis  
+> _Customer demographics will moderately influence acceptance._
+
+**Partially supported — but weaker than expected.**  
+While age ≥ 60 showed a meaningful uptick in acceptance, most demographic features had little predictive power:
+
+- **`job`**: Minor differences were observed (e.g., `retired` and `student` categories showed higher rates), but sample sizes were small, and this was likely related to age.
+- **`education`**: Skewed distribution (heavy concentration in `university.degree`) may have masked more nuanced effects.
+- **`marital`**: Dropped due to low importance in model performance.
+
+These features were ultimately dropped or downweighted, as their impact was minimal compared to macroeconomic factors. Future analysis could explore **class balancing techniques (e.g., SMOTE/SMOTENC)** to more fairly evaluate underrepresented demographic segments.
+
+---
+
 # Recommendations: 
 
 ##  KNN vs. Logistic Regression
